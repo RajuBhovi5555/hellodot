@@ -42,10 +42,10 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Install .NET Framework 4.8
         run: |
-          $url = "https://download.microsoft.com/download/9/0/4/9048f0ed-42d5-4de0-b3d1-4342aeee53e9/NDP48-TargetingPack-KB4486129.exe"
-          $installerPath = "$env:TEMP\NDP48-TargetingPack-KB4486129.exe"
-          Invoke-WebRequest -Uri $url -OutFile $installerPath
-          Start-Process -FilePath $installerPath -ArgumentList '/q' -Wait
+           $url = "https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-web-installer"
+           $installerPath = "$env:TEMP\NDP48-TargetingPack-WebInstaller.exe"
+           Invoke-WebRequest -Uri $url -OutFile $installerPath
+           Start-Process -FilePath $installerPath -ArgumentList '/q' -Wait
 
 
 
