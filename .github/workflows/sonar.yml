@@ -29,7 +29,7 @@ jobs:
 
       - name: Download .NET Framework 4.8 Installer
         run: |
-         $url = "https://dotnet.microsoft.com/download/dotnet-framework/net48/runtime"
+         $url = "https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-web-installer"
          $response = Invoke-WebRequest -Uri $url -Method Get
          $link = $response.Links | Where-Object { $_.innerText -eq "Download .NET Framework 4.8 Runtime" }
          $downloadUrl = $link.href
