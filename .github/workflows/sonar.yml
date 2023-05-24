@@ -27,14 +27,18 @@ jobs:
         with:
           java-version: '11'  # Adjust the Java version as per your requirements
 
-      - name: Install Chocolatey
+      - name: Download .NET Framework 4.8 Installer
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+         $url = "https://dotnet.microsoft.com/download/dotnet-framework/net48/runtime"
+         $response = Invoke-WebRequest -Uri $url -Method Get
+         $link = $response.Links | Where-Object { $_.innerText -eq "Download .NET Framework 4.8 Runtime" }
+         $downloadUrl = $link.href
+         $installerPath = "$env:TEMP\ndp48-web.exe"
+         Invoke-WebRequest -Uri $downloadUrl -OutFile $installerPath
 
       - name: Install .NET Framework 4.8
         run: |
-          choco install dotnetframework --version 4.8.0 -y
-
+         Start-Process -FilePath "$env:TEMP\ndp48-web.exe" -ArgumentList '/q' -Wait
       - name: SonarQube Scan
         run: |
           dotnet tool install --global dotnet-sonarscanner 
