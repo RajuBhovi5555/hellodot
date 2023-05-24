@@ -27,18 +27,10 @@ jobs:
         with:
           java-version: '11'  # Adjust the Java version as per your requirements
 
-      - name: Download .NET Framework 4.8 Installer
-        run: |
-         $url = "https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48/runtime"
-         $response = Invoke-WebRequest -Uri $url -Method Get
-         $link = $response.Links | Where-Object { $_.innerText -eq "Download .NET Framework 4.8 Runtime" }
-         $downloadUrl = $link.href
-         $installerPath = "$env:TEMP\ndp48-web.exe"
-         Invoke-WebRequest -Uri $downloadUrl -OutFile $installerPath
-
       - name: Install .NET Framework 4.8
-        run: |
-         Start-Process -FilePath "$env:TEMP\ndp48-web.exe" -ArgumentList '/q' -Wait
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 4.8
       - name: SonarQube Scan
         run: |
           dotnet tool install --global dotnet-sonarscanner 
